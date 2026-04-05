@@ -44,18 +44,79 @@ This repo is informed by learnings captured in:
 - `bots_soul/shared-docs-reference.md`
 - shared docs around workflow modes, routing, memory, context engineering, skill selection, and evaluation loops
 
-## Example workflow
-### Train from a small dataset
+## How usage works
+Yes — the developer should first give `devadapt` some training data.
+
+At this stage, training is lightweight and dataset-driven:
+1. create or extend a JSON dataset of developer tasks
+2. include the workspace, selected skills, and chosen workflow for each example
+3. run `train` to inspect and prepare the dataset
+4. run `recommend` to get skill/workflow suggestions for a new task
+
+In the current bootstrap version, `train` is a preparation/summary step rather than a full learned checkpointing pipeline. That will evolve in later versions.
+
+## Detailed usage steps
+### 1. Start from the sample dataset
+See:
+- `examples/devadapt-sample.json`
+
+Each entry looks like:
+```json
+{
+  "task": "Review a GitHub PR and inspect failed CI logs",
+  "workspace": "backend-service",
+  "skills": ["github", "session-logs"],
+  "workflow": "review"
+}
+```
+
+### 2. Add your own developer examples
+Add more records that reflect real usage patterns:
+- task description
+- workspace or project label
+- skills that were actually useful
+- workflow mode that worked best
+
+Examples of workflow values:
+- `clarify`
+- `plan`
+- `execute`
+- `parallel`
+- `review`
+
+### 3. Run training/dataset preparation
 ```bash
 cargo run -- train --dataset examples/devadapt-sample.json --epochs 10
 ```
 
-### Recommend skills for a task
+What this currently does:
+- loads the dataset
+- summarizes the available skills/workflows/workspaces
+- prepares the bootstrap training flow
+
+### 4. Ask for a recommendation
 ```bash
 cargo run -- recommend \
   --task "Review a GitHub PR and check failing CI" \
   --workspace backend-service
 ```
+
+Example output:
+```json
+{
+  "skills": ["session-logs", "github", "skill-selection"],
+  "workflow": "review"
+}
+```
+
+### 5. Improve it over time
+As the developer adds more examples, `devadapt` can evolve with:
+- new skills
+- new workflows
+- new project types
+- personal usage preferences
+
+That is the intended long-term value: the model becomes more useful as the developer’s skill ecosystem grows.
 
 ## Honest scope
 This is not a general LLM. It is a focused recommendation model for developer-agent adaptation.
