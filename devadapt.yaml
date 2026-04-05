@@ -1,0 +1,10 @@
+skill_sources:
+  - path: ~/.claude/skills
+    runtime: claude
+    scope: global
+  - path: ~/.openclaw/shared
+    runtime: openclaw
+    scope: shared
+  - path: ./skills
+    runtime: local
+    scope: workspace

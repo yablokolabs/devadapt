@@ -28,6 +28,7 @@ This can help:
 - task text
 - workspace tags
 - available skills and their descriptions
+- skills scanned from known directories or YAML-configured sources
 - prior successful recommendations
 - developer corrections and preferences
 
@@ -87,7 +88,36 @@ Examples of workflow values:
 - `parallel`
 - `review`
 
-### 3. Run training/dataset preparation
+### 3. Scan skill directories automatically
+By default, `devadapt` can use `devadapt.yaml` to discover skills from configured locations.
+
+Example config:
+```yaml
+skill_sources:
+  - path: ~/.claude/skills
+    runtime: claude
+    scope: global
+  - path: ~/.openclaw/shared
+    runtime: openclaw
+    scope: shared
+  - path: ./skills
+    runtime: local
+    scope: workspace
+```
+
+Run:
+```bash
+cargo run -- scan-skills --config devadapt.yaml
+```
+
+This builds a normalized skill inventory with:
+- skill name
+- runtime source
+- scope
+- path
+- lightweight description if available
+
+### 4. Run training/dataset preparation
 ```bash
 cargo run -- train --dataset examples/devadapt-sample.json --epochs 10
 ```
@@ -97,7 +127,7 @@ What this currently does:
 - summarizes the available skills/workflows/workspaces
 - prepares the bootstrap training flow
 
-### 4. Ask for a recommendation
+### 5. Ask for a recommendation
 ```bash
 cargo run -- recommend \
   --task "Review a GitHub PR and check failing CI" \
@@ -112,7 +142,7 @@ Example output:
 }
 ```
 
-### 5. Improve it over time
+### 6. Improve it over time
 As the developer adds more examples, `devadapt` can evolve with:
 - new skills
 - new workflows
@@ -143,12 +173,14 @@ Each training example currently uses this shape:
 ### Current bootstrap version
 - dataset-driven
 - summary-based `train` step
+- skill-source scanning via YAML-configured directories
 - recommendation via lightweight matching/ranking
 - Burn model module included as the foundation for the next stage
 
 ### Planned next stage
 - real learned training loop with Burn
 - saved model artifacts/checkpoints
+- tighter fusion of scanned skill metadata with usage history
 - better feature encoding for tasks/workspaces/skills
 - confidence scoring and recommendation explanations
 - adaptation from a growing developer history
