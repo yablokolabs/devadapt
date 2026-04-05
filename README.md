@@ -67,10 +67,10 @@ See:
 Each entry looks like:
 ```json
 {
-  "task": "Review a GitHub PR and inspect failed CI logs",
+  "task": "Choose the best skills for debugging a backend service issue",
   "workspace": "backend-service",
-  "skills": ["github", "session-logs"],
-  "workflow": "review"
+  "skills": ["session-logs", "skill-selection"],
+  "workflow": "plan"
 }
 ```
 
@@ -130,15 +130,15 @@ What this currently does:
 ### 5. Ask for a recommendation
 ```bash
 cargo run -- recommend \
-  --task "Review a GitHub PR and check failing CI" \
+  --task "Recommend the right skills for a multi-file backend debugging task" \
   --workspace backend-service
 ```
 
 Example output:
 ```json
 {
-  "skills": ["session-logs", "github", "skill-selection"],
-  "workflow": "review"
+  "skills": ["session-logs", "skill-selection", "tmux"],
+  "workflow": "plan"
 }
 ```
 
@@ -191,10 +191,10 @@ You can start a real dataset with entries like:
 ```json
 [
   {
-    "task": "Debug a failing CI pipeline and inspect logs",
+    "task": "Select the best skills for a backend debugging task",
     "workspace": "backend-service",
-    "skills": ["github", "session-logs"],
-    "workflow": "review"
+    "skills": ["session-logs", "skill-selection"],
+    "workflow": "plan"
   },
   {
     "task": "Plan a multi-step repo refactor before implementation",

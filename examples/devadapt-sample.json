@@ -1,9 +1,9 @@
 [
   {
-    "task": "Review a GitHub PR and inspect failed CI logs",
+    "task": "Choose the best skills for debugging a backend service issue",
     "workspace": "backend-service",
-    "skills": ["github", "session-logs"],
-    "workflow": "review"
+    "skills": ["session-logs", "skill-selection"],
+    "workflow": "plan"
   },
   {
     "task": "Need to investigate long-running agent behavior and checkpoint state",
