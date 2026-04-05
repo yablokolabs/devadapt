@@ -117,7 +117,7 @@ This builds a normalized skill inventory with:
 - runtime source
 - scope
 - path
-- lightweight description if available
+- extracted description when available (including YAML/frontmatter metadata in skill docs)
 
 ### 4. Run training/dataset preparation
 ```bash
