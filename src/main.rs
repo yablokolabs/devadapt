@@ -1,6 +1,6 @@
 use anyhow::Result;
 use clap::{Parser, Subcommand};
-use devadapt::data::{load_dataset, summarize_dataset};
+use devadapt::data::{load_dataset, load_skill_config, scan_skill_sources, summarize_dataset};
 use devadapt::recommend::recommend_from_examples;
 
 #[derive(Debug, Parser)]
@@ -19,6 +19,10 @@ enum Command {
         #[arg(long, default_value_t = 10)]
         epochs: usize,
     },
+    ScanSkills {
+        #[arg(long, default_value = "devadapt.yaml")]
+        config: String,
+    },
     Recommend {
         #[arg(long)]
         task: String,
@@ -33,6 +37,7 @@ fn main() -> Result<()> {
     let cli = Cli::parse();
     match cli.command {
         Command::Train { dataset, epochs } => train_cmd(&dataset, epochs),
+        Command::ScanSkills { config } => scan_skills_cmd(&config),
         Command::Recommend {
             task,
             workspace,
@@ -59,6 +64,13 @@ fn train_cmd(dataset: &str, epochs: usize) -> Result<()> {
         serde_json::to_string_pretty(&summary.workspaces)?
     );
     println!("status=bootstrap-ready");
+    Ok(())
+}
+
+fn scan_skills_cmd(config: &str) -> Result<()> {
+    let config = load_skill_config(config)?;
+    let skills = scan_skill_sources(&config);
+    println!("{}", serde_json::to_string_pretty(&skills)?);
     Ok(())
 }
 
