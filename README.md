@@ -205,5 +205,24 @@ You can start a real dataset with entries like:
 ]
 ```
 
+## Library usage
+`devadapt` can be used as both:
+- a CLI tool
+- a Rust library
+
+Example library usage:
+```rust
+use devadapt::{load_dataset, recommend_from_examples};
+
+let examples = load_dataset("examples/devadapt-sample.json")?;
+let recommendation = recommend_from_examples(
+    &examples,
+    "Review a GitHub PR and inspect failing CI",
+    "backend-service",
+);
+println!("{:?}", recommendation);
+# Ok::<(), Box<dyn std::error::Error>>(())
+```
+
 ## Honest scope
 This is not a general LLM. It is a focused recommendation model for developer-agent adaptation.
