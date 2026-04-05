@@ -7,7 +7,7 @@
   },
   {
     "task": "Need to investigate long-running agent behavior and checkpoint state",
-    "workspace": "bots_soul",
+    "workspace": "agent-ops",
     "skills": ["session-logs"],
     "workflow": "plan"
   },

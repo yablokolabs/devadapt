@@ -40,9 +40,12 @@ v0.1 focuses on:
 - Rust-native model implementation with Burn
 
 ## Influence
-This repo is informed by learnings captured in:
-- `bots_soul/shared-docs-reference.md`
-- shared docs around workflow modes, routing, memory, context engineering, skill selection, and evaluation loops
+This repo is informed by broader learnings around:
+- workflow modes
+- routing
+- memory and context engineering
+- skill selection
+- evaluation loops
 
 ## How usage works
 Yes — the developer should first give `devadapt` some training data.
