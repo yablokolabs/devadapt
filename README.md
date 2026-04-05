@@ -34,12 +34,15 @@ This can help:
 - prior successful recommendations
 - developer corrections and preferences
 
-## Initial scope
-v0.1 focuses on:
+## Current scope
+v0.2 focuses on:
 - skill recommendation
 - workflow mode recommendation
+- YAML-based skill source ingestion
+- saved training profile artifacts
+- recommendation explanations
 - JSON dataset format
-- train/eval/recommend CLI
+- train/scan-skills/recommend CLI
 - Rust-native model implementation with Burn
 
 ## Influence
@@ -119,15 +122,20 @@ This builds a normalized skill inventory with:
 - path
 - extracted description when available (including YAML/frontmatter metadata in skill docs)
 
-### 4. Run training/dataset preparation
+### 4. Run training/profile generation
 ```bash
-cargo run -- train --dataset examples/devadapt-sample.json --epochs 10
+cargo run -- train \
+  --dataset examples/devadapt-sample.json \
+  --config devadapt.yaml \
+  --epochs 10 \
+  --output devadapt-profile.json
 ```
 
 What this currently does:
 - loads the dataset
+- scans available skills
 - summarizes the available skills/workflows/workspaces
-- prepares the bootstrap training flow
+- builds a saved profile artifact for later inspection/use
 
 ### 5. Ask for a recommendation
 ```bash
@@ -139,8 +147,14 @@ cargo run -- recommend \
 Example output:
 ```json
 {
-  "skills": ["session-logs", "skill-selection", "tmux"],
-  "workflow": "plan"
+  "recommendation": {
+    "skills": ["session-logs", "skill-selection", "tmux"],
+    "workflow": "plan"
+  },
+  "reasons": [
+    "matched prior workspace pattern: backend-service",
+    "matched scanned skill metadata: session-logs (openclaw)"
+  ]
 }
 ```
 
@@ -172,19 +186,20 @@ Each training example currently uses this shape:
 - `workflow`: the mode that worked best for the task
 
 ## Bootstrap vs future roadmap
-### Current bootstrap version
+### Current v0.2 version
 - dataset-driven
-- summary-based `train` step
 - skill-source scanning via YAML-configured directories
+- saved profile artifact generation
 - recommendation via lightweight matching/ranking
-- Burn model module included as the foundation for the next stage
+- recommendation explanations
+- Burn model module included as the foundation for deeper learned training
 
 ### Planned next stage
 - real learned training loop with Burn
-- saved model artifacts/checkpoints
+- saved model checkpoints beyond profile summaries
 - tighter fusion of scanned skill metadata with usage history
 - better feature encoding for tasks/workspaces/skills
-- confidence scoring and recommendation explanations
+- stronger confidence scoring and recommendation explanations
 - adaptation from a growing developer history
 
 ## Example dataset template
