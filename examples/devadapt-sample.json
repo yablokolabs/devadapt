@@ -1,7 +1,7 @@
 [
   {
     "task": "Review a GitHub PR and inspect failed CI logs",
-    "workspace": "watchtower-backend",
+    "workspace": "backend-service",
     "skills": ["github", "session-logs"],
     "workflow": "review"
   },

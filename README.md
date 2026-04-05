@@ -54,7 +54,7 @@ cargo run -- train --dataset examples/devadapt-sample.json --epochs 10
 ```bash
 cargo run -- recommend \
   --task "Review a GitHub PR and check failing CI" \
-  --workspace watchtower-backend
+  --workspace backend-service
 ```
 
 ## Honest scope
