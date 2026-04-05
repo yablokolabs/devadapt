@@ -1,0 +1,32 @@
+[
+  {
+    "task": "Review a GitHub PR and inspect failed CI logs",
+    "workspace": "watchtower-backend",
+    "skills": ["github", "session-logs"],
+    "workflow": "review"
+  },
+  {
+    "task": "Need to investigate long-running agent behavior and checkpoint state",
+    "workspace": "bots_soul",
+    "skills": ["session-logs"],
+    "workflow": "plan"
+  },
+  {
+    "task": "Weather forecast for Bangalore tomorrow morning",
+    "workspace": "personal",
+    "skills": ["weather"],
+    "workflow": "execute"
+  },
+  {
+    "task": "Need to split independent implementation tasks and merge later",
+    "workspace": "edge-forecast",
+    "skills": ["tmux"],
+    "workflow": "parallel"
+  },
+  {
+    "task": "Find the right skill set for this repo and avoid context saturation",
+    "workspace": "openclaw",
+    "skills": ["skill-selection"],
+    "workflow": "clarify"
+  }
+]

@@ -1,0 +1,17 @@
+[package]
+name = "devadapt"
+version = "0.1.0"
+edition = "2024"
+description = "Burn-powered developer adaptation model for skill and workflow recommendation"
+license = "MIT"
+repository = "https://github.com/yablokolabs/devadapt"
+readme = "README.md"
+keywords = ["developer-tools", "ml", "burn", "skills", "agents"]
+categories = ["algorithms", "science"]
+
+[dependencies]
+anyhow = "1"
+burn = { version = "0.16", features = ["train", "ndarray", "std"] }
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
