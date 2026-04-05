@@ -1,5 +1,7 @@
 # devadapt
 
+[![crates.io](https://img.shields.io/crates/v/devadapt.svg)](https://crates.io/crates/devadapt)
+
 A Burn-powered developer adaptation model for skill and workflow recommendation.
 
 ## What it is
