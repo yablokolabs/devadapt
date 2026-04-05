@@ -118,5 +118,57 @@ As the developer adds more examples, `devadapt` can evolve with:
 
 That is the intended long-term value: the model becomes more useful as the developer’s skill ecosystem grows.
 
+## Dataset schema
+Each training example currently uses this shape:
+
+```json
+{
+  "task": "string",
+  "workspace": "string",
+  "skills": ["skill-a", "skill-b"],
+  "workflow": "review"
+}
+```
+
+### Field meanings
+- `task`: natural-language description of the developer task
+- `workspace`: project/repo/context label
+- `skills`: skills or capabilities that were actually useful
+- `workflow`: the mode that worked best for the task
+
+## Bootstrap vs future roadmap
+### Current bootstrap version
+- dataset-driven
+- summary-based `train` step
+- recommendation via lightweight matching/ranking
+- Burn model module included as the foundation for the next stage
+
+### Planned next stage
+- real learned training loop with Burn
+- saved model artifacts/checkpoints
+- better feature encoding for tasks/workspaces/skills
+- confidence scoring and recommendation explanations
+- adaptation from a growing developer history
+
+## Example dataset template
+You can start a real dataset with entries like:
+
+```json
+[
+  {
+    "task": "Debug a failing CI pipeline and inspect logs",
+    "workspace": "backend-service",
+    "skills": ["github", "session-logs"],
+    "workflow": "review"
+  },
+  {
+    "task": "Plan a multi-step repo refactor before implementation",
+    "workspace": "frontend-app",
+    "skills": ["skill-selection"],
+    "workflow": "plan"
+  }
+]
+```
+
 ## Honest scope
 This is not a general LLM. It is a focused recommendation model for developer-agent adaptation.
