@@ -123,11 +123,34 @@ fn extract_skill_description(path: &Path) -> Option<String> {
             continue;
         }
         if let Ok(text) = fs::read_to_string(file) {
+            if let Some(frontmatter) = extract_frontmatter_description(&text) {
+                return Some(frontmatter);
+            }
             for line in text.lines() {
                 let trimmed = line.trim();
-                if !trimmed.is_empty() && !trimmed.starts_with('#') {
+                if !trimmed.is_empty() && !trimmed.starts_with('#') && trimmed != "---" {
                     return Some(trimmed.to_string());
                 }
+            }
+        }
+    }
+    None
+}
+
+fn extract_frontmatter_description(text: &str) -> Option<String> {
+    let mut lines = text.lines();
+    if lines.next()?.trim() != "---" {
+        return None;
+    }
+    for line in lines {
+        let trimmed = line.trim();
+        if trimmed == "---" {
+            break;
+        }
+        if let Some(value) = trimmed.strip_prefix("description:") {
+            let desc = value.trim().trim_matches('"');
+            if !desc.is_empty() {
+                return Some(desc.to_string());
             }
         }
     }
